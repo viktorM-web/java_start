@@ -1,4 +1,4 @@
-package com.viktor.javaLevel1.function.homework;
+package com.viktor.javalevel1.function.homework;
 
 import java.util.Random;
 
@@ -29,7 +29,7 @@ public class Task2 {
         calculate(VALUE1, VALUE2, symbol);
     }
 
-    public static void calculate(double value1, double value2, char action) {
+    private static void calculate(double value1, double value2, char action) {
         switch (action) {
             case '+' -> System.out.println(value1 + value2 + " (" + value1 + " + " + value2 + ")");
             case '-' -> System.out.println(value1 - value2 + " (" + value1 + " - " + value2 + ")");
@@ -40,7 +40,7 @@ public class Task2 {
         }
     }
 
-    public static char getSymbol() {
+    private static char getSymbol() {
         return switch (RANDOM.nextInt(BOUND_FO_SYMBOL)) {
             case 0 -> '+';
             case 1 -> '-';

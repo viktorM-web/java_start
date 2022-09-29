@@ -1,4 +1,4 @@
-package com.viktor.javaLevel1.arrays.homework;
+package com.viktor.javalevel1.arrays.homework;
 
 import java.util.Arrays;
 
@@ -12,23 +12,23 @@ import java.util.Arrays;
  */
 public class Task1 {
     public static void main(String[] args) {
-        int[] array = {3, 5, -6, 3, 2, -9, 0, -123};
-        int[] result = createArray(array);
+        int[] originalArray = {3, 5, -6, 3, 2, -9, 0, -123};
+        int[] result = createArray(originalArray);
         System.out.println(Arrays.toString(result));
     }
 
-    public static int[] createArray(int[] array) {
-        int newLength = 0;
-        int count = 0;
+    private static int[] createArray(int[] array) {
+        int lengthResultArray = 0;
+        int counter = 0;
         for (int numb : array) {
             if (numb >= 0) {
-                newLength++;
+                lengthResultArray++;
             }
         }
-        int[] resultArray = new int[newLength];
+        int[] resultArray = new int[lengthResultArray];
         for (int numb : array) {
             if (numb >= 0) {
-                resultArray[count++] = numb * newLength;
+                resultArray[counter++] = numb * lengthResultArray;
             }
         }
         return resultArray;

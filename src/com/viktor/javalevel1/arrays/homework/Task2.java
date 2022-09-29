@@ -1,4 +1,4 @@
-package com.viktor.javaLevel1.arrays.homework;
+package com.viktor.javalevel1.arrays.homework;
 
 import java.util.Arrays;
 
@@ -12,35 +12,35 @@ import java.util.Arrays;
  */
 public class Task2 {
     public static void main(String[] args) {
-        char[] symbols = {'a', '6', 'y', 'P', 'T', 'q', '9', '+'};
-        int[] numbers = changeType(symbols);
-        System.out.println(Arrays.toString(symbols));
-        System.out.println(Arrays.toString(numbers));
-        printElementsBiggerAverage(numbers);
+        char[] originalArraySymbols = {'a', '6', 'y', 'P', 'T', 'q', '9', '+'};
+        int[] resultArrayNumbers = changeType(originalArraySymbols);
+        System.out.println(Arrays.toString(originalArraySymbols));
+        System.out.println(Arrays.toString(resultArrayNumbers));
+        printElementsBiggerAverage(resultArrayNumbers);
     }
 
-    private static void printElementsBiggerAverage(int[] numbers) {
-        double average = getArithmeticalMean(numbers);
-        for (int numb : numbers) {
+    private static void printElementsBiggerAverage(int[] arrayNumbers) {
+        double average = getArithmeticalMean(arrayNumbers);
+        for (int numb : arrayNumbers) {
             if (numb > average) {
                 System.out.print(numb + " ");
             }
         }
-        System.out.print(" are bigger then Arithmetical mean which equals " + average);
+        System.out.print(" are bigger then arithmetical mean which equals " + average);
     }
 
-    private static double getArithmeticalMean(int[] numbers) {
+    private static double getArithmeticalMean(int[] arrayNumbers) {
         int sum = 0;
-        for (int numb : numbers) {
+        for (int numb : arrayNumbers) {
             sum += numb;
         }
-        return (double) sum / numbers.length;
+        return (double) sum / arrayNumbers.length;
     }
 
-    public static int[] changeType(char[] symbols) {
-        int[] result = new int[symbols.length];
-        for (int i = 0; i < symbols.length; i++) {
-            result[i] = (int) symbols[i];
+    private static int[] changeType(char[] arraySymbols) {
+        int[] result = new int[arraySymbols.length];
+        for (int i = 0; i < arraySymbols.length; i++) {
+            result[i] = arraySymbols[i];
         }
         return result;
     }

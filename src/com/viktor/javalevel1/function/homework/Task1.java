@@ -1,4 +1,4 @@
-package com.viktor.javaLevel1.function.homework;
+package com.viktor.javalevel1.function.homework;
 
 import java.util.Random;
 
@@ -20,7 +20,7 @@ public class Task1 {
         findQuarter(MINUTES);
     }
 
-    public static void findQuarter(int minutes) {
+    private static void findQuarter(int minutes) {
         if (minutes > 0 && minutes < 15) {
             System.out.println("Value is " + minutes + " It's first quarter");
         } else if (minutes > 15 && minutes < 30) {

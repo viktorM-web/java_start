@@ -1,4 +1,4 @@
-package com.viktor.javaLevel1.cycles.homework;
+package com.viktor.javalevel1.cycles.homework;
 
 /**
  * Дано целое число.
@@ -17,7 +17,7 @@ public class Task2 {
     public static int reversNumber(int number) {
         int current = number;
         int result = 0;
-        while (current % 10 != 0 || current / 10 != 0) {
+        while (current != 0) {
             result = result * 10 + current % 10;
             current /= 10;
         }

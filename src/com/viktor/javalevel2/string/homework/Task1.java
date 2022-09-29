@@ -10,7 +10,7 @@ package com.viktor.javalevel2.string.homework;
  */
 public class Task1 {
     public static void main(String[] args) {
-        String originalString = "abc Cpddd Dio OsfWw";
+        String originalString = "abc Cpddd DCio OsfWw";
         System.out.println(format(originalString));
     }
 
@@ -29,5 +29,4 @@ public class Task1 {
         }
         return result.toString();
     }
-
 }
