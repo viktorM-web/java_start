@@ -44,118 +44,73 @@ public class ATM {
         if (amountOfMoney > amountOfMoneyInTheATM) {
             System.out.println("Insufficient funds in the ATM");
             return false;
-        } else if (amountOfMoney % 100 % 50 % 20 != 0 && amountOfMoney % 20 != 0) {
-            System.out.println("Insufficient funds in the ATM");
-            return false;
         } else {
-            return withdraw(amountOfMoney);
-        }
-    }
+            int currentAmountOfMoney = 0;
+            int counterAmountOfHundredDollarBill = 0;
+            int counterAmountOfFiftyDollarBill = 0;
+            int counterAmountOfTwentyDollarBill = 0;
+            int currentAmountOfHundredDollarBill = amountOfHundredDollarBill;
+            int currentAmountOfFiftyDollarBill = amountOfFiftyDollarBill;
+            int currentAmountOfTwentyDollarBill = amountOfTwentyDollarBill;
+            int remainder = amountOfMoney % 100;
 
-    private boolean withdraw(int amountOfMoney) {
-        int currentAmountOfMoney = amountOfMoney;
-        int currentAmountOfTwentyDollarBill = amountOfTwentyDollarBill;
-        int currentAmountOfFiftyDollarBill = amountOfFiftyDollarBill;
-        int currentAmountOfHundredDollarBill = amountOfHundredDollarBill;
-        int counterHundredDollarBill = 0;
-        int counterFiftyDollarBill = 0;
-        int counterTwentyDollarBill = 0;
-        while (currentAmountOfMoney >= DENOMINATION_OF_HUNDRED_DOLLAR_BILL) {
-            if (currentAmountOfHundredDollarBill != 0) {
-                currentAmountOfMoney -= DENOMINATION_OF_HUNDRED_DOLLAR_BILL;
-                currentAmountOfHundredDollarBill--;
-                counterHundredDollarBill++;
-            } else if (currentAmountOfFiftyDollarBill > 1) {
-                currentAmountOfMoney -= DENOMINATION_OF_FIFTY_DOLLAR_BILL;
-                currentAmountOfFiftyDollarBill--;
-                counterFiftyDollarBill++;
-            } else if (currentAmountOfTwentyDollarBill > 4) {
-                currentAmountOfMoney -= DENOMINATION_OF_TWENTY_DOLLAR_BILL;
-                currentAmountOfTwentyDollarBill--;
-                counterTwentyDollarBill++;
+            if (remainder % 20 == 0) {
+                if (remainder / 20 <= currentAmountOfTwentyDollarBill) {
+                    currentAmountOfTwentyDollarBill -= remainder / 20;
+                    counterAmountOfTwentyDollarBill += remainder / 20;
+                } else {
+                    System.out.println("Try entering a different amount");
+                    return false;
+                }
+            } else if (remainder % 50 % 20 == 0) {
+                if (currentAmountOfFiftyDollarBill >= 1 && remainder % 50 / 20 <= currentAmountOfTwentyDollarBill) {
+                    currentAmountOfFiftyDollarBill--;
+                    counterAmountOfFiftyDollarBill++;
+                    currentAmountOfTwentyDollarBill -= remainder % 50 / 20;
+                    counterAmountOfTwentyDollarBill += remainder % 50 / 20;
+                } else {
+                    System.out.println("Try entering a different amount");
+                    return false;
+                }
             } else {
-                System.out.println("Insufficient funds in the ATM");
+                System.out.println("Not correct amount");
                 return false;
             }
+            currentAmountOfMoney = amountOfMoney - remainder;
+            if (currentAmountOfMoney / 100 <= currentAmountOfHundredDollarBill) {
+                currentAmountOfHundredDollarBill -= currentAmountOfMoney / 100;
+                counterAmountOfHundredDollarBill += currentAmountOfMoney / 100;
+            } else {
+                counterAmountOfHundredDollarBill = currentAmountOfHundredDollarBill;
+                currentAmountOfHundredDollarBill -= counterAmountOfHundredDollarBill;
+                currentAmountOfMoney -= counterAmountOfHundredDollarBill * 100;
+                if (currentAmountOfMoney / 50 <= currentAmountOfFiftyDollarBill) {
+                    currentAmountOfFiftyDollarBill -= currentAmountOfMoney / 50;
+                    counterAmountOfFiftyDollarBill += currentAmountOfMoney / 50;
+                } else {
+                    int localCounterOfFiftyDollarBill =
+                            currentAmountOfFiftyDollarBill % 2 == 0 ?
+                                    currentAmountOfFiftyDollarBill : currentAmountOfFiftyDollarBill - 1;
+                    currentAmountOfFiftyDollarBill -= localCounterOfFiftyDollarBill;
+                    currentAmountOfMoney -= localCounterOfFiftyDollarBill * 50;
+                    counterAmountOfFiftyDollarBill += localCounterOfFiftyDollarBill;
+                    if (currentAmountOfMoney / 20 <= currentAmountOfTwentyDollarBill) {
+                        currentAmountOfTwentyDollarBill -= currentAmountOfMoney / 20;
+                        counterAmountOfTwentyDollarBill += currentAmountOfMoney / 20;
+                    } else {
+                        System.out.println("Try entering a different amount");
+                        return false;
+                    }
+                }
+            }
+            this.amountOfTwentyDollarBill = currentAmountOfTwentyDollarBill;
+            this.amountOfFiftyDollarBill = currentAmountOfFiftyDollarBill;
+            this.amountOfHundredDollarBill = currentAmountOfHundredDollarBill;
+            countAmountOfMoneyInTheATM();
+            System.out.printf("%d - 20$ bills\n%d - 50$ bills\n%d - 100$ bills\nwas withdrawn from the ATM\n",
+                    counterAmountOfTwentyDollarBill, counterAmountOfFiftyDollarBill, counterAmountOfHundredDollarBill);
+            return true;
         }
-        switch (currentAmountOfMoney) {
-            case 90:
-                if (currentAmountOfFiftyDollarBill >= 1 && currentAmountOfTwentyDollarBill >= 2) {
-                    counterFiftyDollarBill++;
-                    currentAmountOfFiftyDollarBill--;
-                    counterTwentyDollarBill += 2;
-                    currentAmountOfTwentyDollarBill -= 2;
-                    break;
-                } else {
-                    System.out.println("Insufficient funds in the ATM.\nTry entering a different amount");
-                    return false;
-                }
-            case 80:
-                if (currentAmountOfTwentyDollarBill >= 4) {
-                    counterTwentyDollarBill += 4;
-                    currentAmountOfTwentyDollarBill -= 4;
-                    break;
-                } else {
-                    System.out.println("Insufficient funds in the ATM.\nTry entering a different amount");
-                    return false;
-                }
-            case 70:
-                if (currentAmountOfFiftyDollarBill >= 1 && currentAmountOfTwentyDollarBill >= 1) {
-                    counterFiftyDollarBill++;
-                    currentAmountOfFiftyDollarBill--;
-                    counterTwentyDollarBill++;
-                    currentAmountOfTwentyDollarBill--;
-                    break;
-                } else {
-                    System.out.println("Insufficient funds in the ATM.\nTry entering a different amount");
-                    return false;
-                }
-            case 60:
-                if (currentAmountOfTwentyDollarBill >= 3) {
-                    counterTwentyDollarBill += 3;
-                    currentAmountOfTwentyDollarBill -= 3;
-                    break;
-                } else {
-                    System.out.println("Insufficient funds in the ATM.\nTry entering a different amount");
-                    return false;
-                }
-            case 50:
-                if (currentAmountOfFiftyDollarBill >= 1) {
-                    counterFiftyDollarBill++;
-                    currentAmountOfFiftyDollarBill--;
-                    break;
-                } else {
-                    System.out.println("Insufficient funds in the ATM.\nTry entering a different amount");
-                    return false;
-                }
-            case 40:
-                if (currentAmountOfTwentyDollarBill >= 2) {
-                    counterTwentyDollarBill += 2;
-                    currentAmountOfTwentyDollarBill -= 2;
-                    break;
-                } else {
-                    System.out.println("Insufficient funds in the ATM.\nTry entering a different amount");
-                    return false;
-                }
-            case 20:
-                if (currentAmountOfTwentyDollarBill >= 1) {
-                    counterTwentyDollarBill++;
-                    currentAmountOfTwentyDollarBill--;
-                    break;
-                } else {
-                    System.out.println("Insufficient funds in the ATM.\nTry entering a different amount");
-                    return false;
-                }
-            default:
-                return false;
-        }
-        this.amountOfTwentyDollarBill = currentAmountOfTwentyDollarBill;
-        this.amountOfFiftyDollarBill = currentAmountOfFiftyDollarBill;
-        this.amountOfHundredDollarBill = currentAmountOfHundredDollarBill;
-        countAmountOfMoneyInTheATM();
-        System.out.printf("%d - 20$ bills\n%d - 50$ bills\n%d - 100$ bills\nwas withdrawn from the ATM\n",
-                counterTwentyDollarBill, counterFiftyDollarBill, counterHundredDollarBill);
-        return true;
     }
 
     void countAmountOfMoneyInTheATM() {
