@@ -4,28 +4,28 @@ public class Floor {
     private int numberFloor;
     private Flat[] planFloor;
 
-    public Floor(int numberFloor, Flat[] planFloor) {
+    Floor(int numberFloor, Flat[] planFloor) {
         this.numberFloor = numberFloor;
         this.planFloor = planFloor;
     }
 
-    public void print() {
+    void print() {
         System.out.println("Floor number " + numberFloor + ", numbers of flat " + planFloor.length);
     }
 
-    public int getNumberFloor() {
+    int getNumberFloor() {
         return numberFloor;
     }
 
-    public void setNumberFloor(int numberFloor) {
+    void setNumberFloor(int numberFloor) {
         this.numberFloor = numberFloor;
     }
 
-    public Flat[] getPlanFloor() {
+    Flat[] getPlanFloor() {
         return planFloor;
     }
 
-    public void setPlanFloor(Flat[] planFloor) {
+    void setPlanFloor(Flat[] planFloor) {
         this.planFloor = planFloor;
     }
 }

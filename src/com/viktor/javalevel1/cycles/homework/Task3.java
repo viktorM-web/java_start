@@ -1,4 +1,4 @@
-package com.viktor.javaLevel1.cycles.homework;
+package com.viktor.javalevel1.cycles.homework;
 
 /**
  * Программист Ваня сразу после окончания курсов dmdev устроился в IT компанию на позицию Junior Java Developer с зарплатой 600$ в месяц.

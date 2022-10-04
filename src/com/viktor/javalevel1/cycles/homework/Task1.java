@@ -1,4 +1,4 @@
-package com.viktor.javaLevel1.cycles.homework;
+package com.viktor.javalevel1.cycles.homework;
 
 /**
  * Посчитать четные и нечетные цифры целого числа и вывести их на консоль.
@@ -8,29 +8,32 @@ package com.viktor.javaLevel1.cycles.homework;
  */
 public class Task1 {
     public static void main(String[] args) {
-        int number = 1030;
-        System.out.println("The number " + number + " have " + getEvenNumbers(number) + " even and " + getOddNumbers(number) + " odd numbers");
+        int number = 12559500;
+        System.out.println("The number " + number + " have " + getEvenNumbers(number) + " even and " +
+                getOddNumbers(number) + " odd numbers");
     }
 
-    public static int getEvenNumbers(int number) {
+    private static int getEvenNumbers(int number) {
         int current = number;
-        int counter = 0;
-        while (current % 10 != 0 || current / 10 != 0) {
+        int result = 0;
+        while (current != 0) {
             if (current % 10 % 2 == 0) {
-                counter++;
+                result++;
             }
             current /= 10;
         }
-        return counter;
+        return result;
     }
 
-    public static int getOddNumbers(int number) {
-        int counter = 0;
-        for (int i = number; i % 10 != 0 || i / 10 != 0; i /= 10) {
-            if (i % 10 % 2 != 0) {
-                counter++;
+    private static int getOddNumbers(int number) {
+        int current = number;
+        int result = 0;
+        while (current != 0) {
+            if (current % 10 % 2 != 0) {
+                result++;
             }
+            current /= 10;
         }
-        return counter;
+        return result;
     }
 }

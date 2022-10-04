@@ -7,7 +7,7 @@ public class Room {
         this.isPassage = isPassage;
     }
 
-    public void print() {
+    void print() {
         if (isPassage) {
             System.out.println("Passage room");
         } else System.out.println("Not Passage room");

@@ -1,4 +1,4 @@
-package com.viktor.javaLevel1.function.homework;
+package com.viktor.javalevel1.function.homework;
 
 /**
  * Даны два прямоугольных треугольника.
@@ -14,15 +14,15 @@ package com.viktor.javaLevel1.function.homework;
 public class Task3 {
 
     public static void main(String[] args) {
-        compare(getSquare(12,15),getSquare(15,14));
+        compare(getSquare(12, 15), getSquare(15, 14));
 
     }
 
-    public static double getSquare(int fistSide, int secondSide) {
-        return fistSide * (double) secondSide / 2;
+    private static double getSquare(int fistSide, int secondSide) {
+        return fistSide * secondSide / 2.0;
     }
 
-    public static void compare(double firstSquare, double secondSquare) {
+    private static void compare(double firstSquare, double secondSquare) {
         if (firstSquare > secondSquare) {
             System.out.println("First triangle bigger the second");
         } else if (firstSquare < secondSquare) {

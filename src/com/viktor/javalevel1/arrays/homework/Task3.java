@@ -1,6 +1,4 @@
-package com.viktor.javaLevel1.arrays.homework;
-
-import java.util.Arrays;
+package com.viktor.javalevel1.arrays.homework;
 
 /**
  * Дан одномерный массив целых чисел.
@@ -17,15 +15,14 @@ import java.util.Arrays;
  * <p>
  * [1, 9, 3]
  */
-
 public class Task3 {
     public static void main(String[] args) {
-        int[] array = {-4, 0, 1, 9, 0, -18, 3};
-        int[][] resultArray = remakeArray(array);
+        int[] originalArray = {-4, 0, 1, 9, 0, -18, 3};
+        int[][] resultArray = remakeArray(originalArray);
         printArray(resultArray);
     }
 
-    public static int[][] remakeArray(int[] array) {
+    private static int[][] remakeArray(int[] array) {
         int[][] result = new int[3][];
         int countZero = 0;
         int countNegative = 0;
@@ -56,18 +53,19 @@ public class Task3 {
         return result;
     }
 
-    public static void printArray(int[][] arrays) {
-        System.out.println("{ ");
+    private static void printArray(int[][] arrays) {
         for (int i = 0; i < arrays.length; i++) {
             int[] array = arrays[i];
             System.out.print("{ ");
             for (int j = 0; j < array.length; j++) {
-                System.out.print(array[j] + " ");
+                if (j != array.length - 1) {
+                    System.out.print(array[j] + ", ");
+                } else {
+                    System.out.print(array[j] + " ");
+                }
             }
-            System.out.print("} ");
+            System.out.print("}");
             System.out.println();
-
         }
-        System.out.println("}");
     }
 }

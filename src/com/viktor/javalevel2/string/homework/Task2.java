@@ -17,7 +17,7 @@ import java.util.Arrays;
  */
 public class Task2 {
     public static void main(String[] args) {
-        String originalString = "Привет 8, как 1 2 твои дела? Может4, сделать 3 дело?";
+        String originalString = "Привет 8, как 1 2 твои дела? Может4, 1 сделать 3 дело?";
         int[] arrayFromString = getArrayNumbers(originalString);
         System.out.println("Sum numbers from array " + getSum(arrayFromString) +
                 " -> " + Arrays.toString(arrayFromString));
