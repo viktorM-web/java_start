@@ -16,22 +16,30 @@ package com.viktor.javalevel2.encapsulation.homework;
  * Создать конструктор с тремя параметрами - количеством купюр каждого номинала.
  */
 public class ATM {
-    private static final int DENOMINATION_OF_TWENTY_DOLLAR_BILL = 20;
-    private static final int DENOMINATION_OF_FIFTY_DOLLAR_BILL = 50;
-    private static final int DENOMINATION_OF_HUNDRED_DOLLAR_BILL = 100;
+    private static final int VALUE_OF_TEN = 10;
+    private static final int VALUE_OF_TWENTY = 20;
+    private static final int VALUE_OF_THIRTY = 30;
+    private static final int VALUE_OF_FIFTY = 50;
+    private static final int VALUE_OF_HUNDRED = 100;
     private int amountOfTwentyDollarBill;
     private int amountOfFiftyDollarBill;
     private int amountOfHundredDollarBill;
     private int amountOfMoneyInTheATM;
+    private int counterWithdrawingTwenty;
+    private int counterWithdrawingFifty;
+    private int counterWithdrawingHundred;
 
-    ATM(int amountOfTwentyDollarBill, int amountOfFiftyDollarBill, int amountOfHundredDollarBill) {
+    protected ATM(int amountOfTwentyDollarBill, int amountOfFiftyDollarBill, int amountOfHundredDollarBill) {
+
         this.amountOfTwentyDollarBill = amountOfTwentyDollarBill;
         this.amountOfFiftyDollarBill = amountOfFiftyDollarBill;
         this.amountOfHundredDollarBill = amountOfHundredDollarBill;
         countAmountOfMoneyInTheATM();
     }
 
-    void addCashToTheATM(int amountOfTwentyDollarBill, int amountOfFiftyDollarBill, int amountOfHundredDollarBill) {
+    protected void addCashToTheATM(int amountOfTwentyDollarBill, int amountOfFiftyDollarBill,
+                                   int amountOfHundredDollarBill) {
+
         this.amountOfTwentyDollarBill += amountOfTwentyDollarBill;
         this.amountOfFiftyDollarBill += amountOfFiftyDollarBill;
         this.amountOfHundredDollarBill += amountOfHundredDollarBill;
@@ -40,83 +48,109 @@ public class ATM {
                 amountOfTwentyDollarBill, amountOfFiftyDollarBill, amountOfHundredDollarBill);
     }
 
-    boolean withdrawCash(int amountOfMoney) {
-        if (amountOfMoney > amountOfMoneyInTheATM) {
-            System.out.println("Insufficient funds in the ATM");
+    protected boolean withdrawCash(int amountOfMoney) {
+        resentCounter();
+        boolean flag = true;
+        if (!isCorrectAmount(amountOfMoney)) {
             return false;
-        } else {
-            int currentAmountOfMoney = 0;
-            int counterAmountOfHundredDollarBill = 0;
-            int counterAmountOfFiftyDollarBill = 0;
-            int counterAmountOfTwentyDollarBill = 0;
-            int currentAmountOfHundredDollarBill = amountOfHundredDollarBill;
-            int currentAmountOfFiftyDollarBill = amountOfFiftyDollarBill;
-            int currentAmountOfTwentyDollarBill = amountOfTwentyDollarBill;
-            int remainder = amountOfMoney % 100;
-
-            if (remainder % 20 == 0) {
-                if (remainder / 20 <= currentAmountOfTwentyDollarBill) {
-                    currentAmountOfTwentyDollarBill -= remainder / 20;
-                    counterAmountOfTwentyDollarBill += remainder / 20;
-                } else {
-                    System.out.println("Try entering a different amount");
-                    return false;
-                }
-            } else if (remainder % 50 % 20 == 0) {
-                if (currentAmountOfFiftyDollarBill >= 1 && remainder % 50 / 20 <= currentAmountOfTwentyDollarBill) {
-                    currentAmountOfFiftyDollarBill--;
-                    counterAmountOfFiftyDollarBill++;
-                    currentAmountOfTwentyDollarBill -= remainder % 50 / 20;
-                    counterAmountOfTwentyDollarBill += remainder % 50 / 20;
-                } else {
-                    System.out.println("Try entering a different amount");
-                    return false;
-                }
-            } else {
-                System.out.println("Not correct amount");
+        } else if (amountOfMoney < VALUE_OF_HUNDRED) {
+            flag = withdrawAmountLessHundred(amountOfMoney);
+            if (!flag) {
                 return false;
             }
-            currentAmountOfMoney = amountOfMoney - remainder;
-            if (currentAmountOfMoney / 100 <= currentAmountOfHundredDollarBill) {
-                currentAmountOfHundredDollarBill -= currentAmountOfMoney / 100;
-                counterAmountOfHundredDollarBill += currentAmountOfMoney / 100;
+        } else {
+            flag = withdrawAmountMoreHundred(amountOfMoney);
+            if (!flag) {
+                return false;
+            }
+        }
+        this.amountOfTwentyDollarBill -= counterWithdrawingTwenty;
+        this.amountOfFiftyDollarBill -= counterWithdrawingFifty;
+        this.amountOfHundredDollarBill -= counterWithdrawingHundred;
+        countAmountOfMoneyInTheATM();
+        System.out.printf("%d - 20$ bills\n%d - 50$ bills\n%d - 100$ bills\nwas withdrawn from the ATM\n",
+                counterWithdrawingTwenty, counterWithdrawingFifty, counterWithdrawingHundred);
+        return true;
+    }
+
+    private boolean withdrawAmountMoreHundred(int amountOfMoney) {
+        boolean flag = true;
+        int remainder = amountOfMoney % VALUE_OF_HUNDRED;
+        int currentAmountOfMoney = amountOfMoney - remainder;
+        flag = withdrawAmountLessHundred(remainder);
+        if (!flag) {
+            return false;
+        }
+        if (currentAmountOfMoney / VALUE_OF_HUNDRED <= amountOfHundredDollarBill) {
+            counterWithdrawingHundred += currentAmountOfMoney / VALUE_OF_HUNDRED;
+        } else {
+            counterWithdrawingHundred = amountOfHundredDollarBill;
+            currentAmountOfMoney -= counterWithdrawingHundred * VALUE_OF_HUNDRED;
+            if (currentAmountOfMoney / VALUE_OF_FIFTY <= amountOfFiftyDollarBill - counterWithdrawingFifty) {
+                counterWithdrawingFifty += currentAmountOfMoney / VALUE_OF_FIFTY;
             } else {
-                counterAmountOfHundredDollarBill = currentAmountOfHundredDollarBill;
-                currentAmountOfHundredDollarBill -= counterAmountOfHundredDollarBill;
-                currentAmountOfMoney -= counterAmountOfHundredDollarBill * 100;
-                if (currentAmountOfMoney / 50 <= currentAmountOfFiftyDollarBill) {
-                    currentAmountOfFiftyDollarBill -= currentAmountOfMoney / 50;
-                    counterAmountOfFiftyDollarBill += currentAmountOfMoney / 50;
+                int localAmountOfFiftyDollarBill = amountOfFiftyDollarBill - counterWithdrawingFifty;
+                int localCounterOfFiftyDollarBill =
+                        localAmountOfFiftyDollarBill % 2 == 0 ?
+                                localAmountOfFiftyDollarBill : localAmountOfFiftyDollarBill - 1;
+                currentAmountOfMoney -= localCounterOfFiftyDollarBill * VALUE_OF_FIFTY;
+                counterWithdrawingFifty += localCounterOfFiftyDollarBill;
+                if (currentAmountOfMoney / VALUE_OF_TWENTY <= amountOfTwentyDollarBill - counterWithdrawingTwenty) {
+                    counterWithdrawingTwenty += currentAmountOfMoney / VALUE_OF_TWENTY;
+
                 } else {
-                    int localCounterOfFiftyDollarBill =
-                            currentAmountOfFiftyDollarBill % 2 == 0 ?
-                                    currentAmountOfFiftyDollarBill : currentAmountOfFiftyDollarBill - 1;
-                    currentAmountOfFiftyDollarBill -= localCounterOfFiftyDollarBill;
-                    currentAmountOfMoney -= localCounterOfFiftyDollarBill * 50;
-                    counterAmountOfFiftyDollarBill += localCounterOfFiftyDollarBill;
-                    if (currentAmountOfMoney / 20 <= currentAmountOfTwentyDollarBill) {
-                        currentAmountOfTwentyDollarBill -= currentAmountOfMoney / 20;
-                        counterAmountOfTwentyDollarBill += currentAmountOfMoney / 20;
-                    } else {
-                        System.out.println("Try entering a different amount");
-                        return false;
-                    }
+                    System.out.println("Try entering a different amount");
+                    return false;
                 }
             }
-            this.amountOfTwentyDollarBill = currentAmountOfTwentyDollarBill;
-            this.amountOfFiftyDollarBill = currentAmountOfFiftyDollarBill;
-            this.amountOfHundredDollarBill = currentAmountOfHundredDollarBill;
-            countAmountOfMoneyInTheATM();
-            System.out.printf("%d - 20$ bills\n%d - 50$ bills\n%d - 100$ bills\nwas withdrawn from the ATM\n",
-                    counterAmountOfTwentyDollarBill, counterAmountOfFiftyDollarBill, counterAmountOfHundredDollarBill);
-            return true;
+        }
+        return true;
+    }
+
+    private boolean withdrawAmountLessHundred(int amountOfMoney) {
+        if (amountOfMoney % VALUE_OF_TWENTY == 0) {
+            if (amountOfMoney / VALUE_OF_TWENTY <= amountOfTwentyDollarBill) {
+                counterWithdrawingTwenty = amountOfMoney / VALUE_OF_TWENTY;
+                return true;
+            } else {
+                System.out.println("Try entering a different amount");
+                return false;
+            }
+        } else {
+            if (amountOfFiftyDollarBill >= 1 &&
+                    (amountOfMoney - VALUE_OF_FIFTY) / VALUE_OF_TWENTY <= amountOfTwentyDollarBill) {
+                counterWithdrawingTwenty = (amountOfMoney - VALUE_OF_FIFTY) / VALUE_OF_TWENTY;
+                counterWithdrawingFifty++;
+                return true;
+            } else {
+                System.out.println("Try entering a different amount");
+                return false;
+            }
         }
     }
 
-    void countAmountOfMoneyInTheATM() {
-        amountOfMoneyInTheATM = this.amountOfTwentyDollarBill * DENOMINATION_OF_TWENTY_DOLLAR_BILL +
-                this.amountOfFiftyDollarBill * DENOMINATION_OF_FIFTY_DOLLAR_BILL +
-                this.amountOfHundredDollarBill * DENOMINATION_OF_HUNDRED_DOLLAR_BILL;
+    private boolean isCorrectAmount(int amountOfMoney) {
+        int remainder = amountOfMoney % VALUE_OF_HUNDRED;
+        if (amountOfMoney > amountOfMoneyInTheATM) {
+            System.out.println("Not enough money in the ATM");
+            return false;
+        } else if (remainder < VALUE_OF_TWENTY || remainder % VALUE_OF_TEN != 0 || remainder == VALUE_OF_THIRTY) {
+            System.out.println("Not correct value, try again");
+            return false;
+        } else return true;
+    }
+
+    private void resentCounter() {
+        counterWithdrawingTwenty = 0;
+        counterWithdrawingFifty = 0;
+        counterWithdrawingHundred = 0;
+    }
+
+    private void countAmountOfMoneyInTheATM() {
+        amountOfMoneyInTheATM = this.amountOfTwentyDollarBill * VALUE_OF_TWENTY +
+                this.amountOfFiftyDollarBill * VALUE_OF_FIFTY +
+                this.amountOfHundredDollarBill * VALUE_OF_HUNDRED;
+
     }
 
     @Override
