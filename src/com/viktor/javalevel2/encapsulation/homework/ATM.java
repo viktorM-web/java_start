@@ -30,6 +30,7 @@ public class ATM {
     private int counterWithdrawingHundred;
 
     protected ATM(int amountOfTwentyDollarBill, int amountOfFiftyDollarBill, int amountOfHundredDollarBill) {
+
         this.amountOfTwentyDollarBill = amountOfTwentyDollarBill;
         this.amountOfFiftyDollarBill = amountOfFiftyDollarBill;
         this.amountOfHundredDollarBill = amountOfHundredDollarBill;
@@ -38,6 +39,7 @@ public class ATM {
 
     protected void addCashToTheATM(int amountOfTwentyDollarBill, int amountOfFiftyDollarBill,
                                    int amountOfHundredDollarBill) {
+
         this.amountOfTwentyDollarBill += amountOfTwentyDollarBill;
         this.amountOfFiftyDollarBill += amountOfFiftyDollarBill;
         this.amountOfHundredDollarBill += amountOfHundredDollarBill;
@@ -95,6 +97,7 @@ public class ATM {
                 counterWithdrawingFifty += localCounterOfFiftyDollarBill;
                 if (currentAmountOfMoney / VALUE_OF_TWENTY <= amountOfTwentyDollarBill - counterWithdrawingTwenty) {
                     counterWithdrawingTwenty += currentAmountOfMoney / VALUE_OF_TWENTY;
+
                 } else {
                     System.out.println("Try entering a different amount");
                     return false;
@@ -147,6 +150,7 @@ public class ATM {
         amountOfMoneyInTheATM = this.amountOfTwentyDollarBill * VALUE_OF_TWENTY +
                 this.amountOfFiftyDollarBill * VALUE_OF_FIFTY +
                 this.amountOfHundredDollarBill * VALUE_OF_HUNDRED;
+
     }
 
     @Override

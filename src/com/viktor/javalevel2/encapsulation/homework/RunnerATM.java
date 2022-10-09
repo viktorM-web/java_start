@@ -10,5 +10,4 @@ public class RunnerATM {
         atm.withdrawCash(270);
         System.out.println(atm.toString());
     }
-
 }
